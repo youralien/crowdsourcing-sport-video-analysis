@@ -66,6 +66,7 @@ def save_to_db():
                 c.execute("""INSERT INTO sequences VALUES (?, ?)""",
                           (seqIter, label))
                 conn.commit()
+                ballNumber = 0
                 seqIter += 1
 
             else:

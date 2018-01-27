@@ -11,3 +11,5 @@ time	label
 14	serve
 15	hit
 17	loose
+25	hit
+26	win
