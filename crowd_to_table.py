@@ -3,20 +3,6 @@ sample data stream of crowd annotations for
 first stage of pipeline found in
 
 sequence_annotation.txt
-
-time (s)    label
-1   serve
-2   hit
-3   hit
-4   win
-8   serve
-9   hit
-10  hit
-11  hit
-12  loose
-14  serve
-15  hit
-17  loose
 """
 import sqlite3
 
