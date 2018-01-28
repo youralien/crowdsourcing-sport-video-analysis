@@ -21,6 +21,7 @@
 <script>
       // 2. This code loads the IFrame Player API code asynchronously.
       var tag = document.createElement('script');
+    var playDeadButton = "play";
 	  var times = [];
 	  var printholder = "";
       tag.src = "https://www.youtube.com/iframe_api";
@@ -62,10 +63,25 @@
         player.stopVideo();
       }
 	
+  function togglePlayDead() {
+    if (playDeadButton == "play") {
+      document.getElementById("playdeadbutton").innerHTML = "Click for end of play";
+      playDeadButton = "dead";
+    } else {
+      playDeadButton = "play";
+      document.getElementById("playdeadbutton").innerHTML = "Click for start of play";
+    }
+  }
+
 	function getTime() {
 		console.log(player.getCurrentTime())
 		times.push(Math.round(player.getCurrentTime()))
 	}
+
+  function toggleAndGetTime() {
+    togglePlayDead();
+    getTime();
+  }
 	
 	function doneFun() {
 		var holder = null;
@@ -117,8 +133,8 @@
   <!-- About Section -->
   <section class="about" id="about">
     <h2 class="hidden">About</h2>
-    <p class="text_column">Please click the button below at the begining or end of an point</p>
-	<p class="text_column"><button type="button" onclick="getTime()" >Click for begin/end of point!</button></p>
+    <p class="text_column">Please click the button below at the begining or end of play</p>
+	<p class="text_column"><button id="playdeadbutton" type="button" onclick="toggleAndGetTime()" >Click for start of play</button></p>
   </section>
   <!-- Stats Gallery Section -->
   <section class="about" id="about2">
