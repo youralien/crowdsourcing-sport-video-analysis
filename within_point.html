@@ -44,6 +44,8 @@
 	  var serve = [];
 	  var hit = [];
 	  var outcome = [];
+	  var mastertime = [];
+	  var printholder = "";
       tag.src = "https://www.youtube.com/iframe_api";
       var firstScriptTag = document.getElementsByTagName('script')[0];
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
@@ -55,7 +57,7 @@
         player = new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: '-Dx8q0IO160',
+          videoId: 'ZzPo8NY6ka4',
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -93,18 +95,24 @@
       }
 	
 	function serveFun() {
-		serve.push(player.getCurrentTime())
+		mastertime.push([Math.round(player.getCurrentTime()),"serve"])
 	}
 	
 	function hitFun() {
-		hit.push(player.getCurrentTime())
+		mastertime.push([Math.round(player.getCurrentTime()),"hit"])
 	}
 	
 	function end() {
-		outcome.push(player.getCurrentTime())
+		mastertime.push([Math.round(player.getCurrentTime()),"end_point"])
 	}
 	function doneFun() {
-		document.getElementById("output").innerHTML="Serves: " + serve + "</br>Hits: " + hit + "</br> Outcomes: " + outcome; 
+//		document.getElementById("output").innerHTML="Serves: " + serve + "</br>Hits: " + hit + "</br> Outcomes: " + outcome;
+		for (var i = 0; i < mastertime.length; i++) {
+			var evtstr = mastertime[i][0] + " &#09; " + mastertime[i][1] + "</br>";
+    		printholder = printholder.concat(evtstr);
+    	//Do something
+		}
+		document.getElementById("output").innerHTML=printholder;
 	}
 	
     </script>	

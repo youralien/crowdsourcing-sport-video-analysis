@@ -34,10 +34,12 @@
 		}
        
 	}
-	
-	var start = getQueryVariable("start");
-	var stop = parseInt(getQueryVariable("stop")-start)*1000;
-	
+	var eventtime = getQueryVariable("time");
+	var start = eventtime - 1;
+	var stop = 3000;
+	var style = ""
+	var foreorback = ""
+	var win_or_loss = ""
 	console.log(start)
 		
       var tag = document.createElement('script');
@@ -55,7 +57,7 @@
         player = new YT.Player('player', {
           height: '390',
           width: '640',
-          videoId: '-Dx8q0IO160',
+          videoId: 'ZzPo8NY6ka4',
           events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -92,19 +94,36 @@
         player.stopVideo();
       }
 	
-	function serveFun() {
-		serve.push(player.getCurrentTime())
+	function agressive() {
+		style = "aggressive";
 	}
 	
-	function hitFun() {
-		hit.push(player.getCurrentTime())
+	function forehand() {
+		foreorback = "forehand";
 	}
+	
+	function backhand() {
+		foreorback = "backhand";
+	}
+	
+	function win() {
+		win_or_loss = "win";
+	}
+	
+	function loss() {
+		win_or_loss = "loss";
+	}
+	
+	function passive() {
+		style = "passive";
+	}
+	
 	
 	function end() {
 		outcome.push(player.getCurrentTime())
 	}
 	function doneFun() {
-		document.getElementById("output").innerHTML="Serves: " + serve + "</br>Hits: " + hit + "</br> Outcomes: " + outcome; 
+		document.getElementById("output").innerHTML="Output: </br>" + eventtime + " &#09; " + foreorback + win_or_loss + " &#09; " + style; 
 	}
 	
     </script>	
@@ -142,9 +161,9 @@
   <section class="about" id="about">
     <h2 class="hidden">About</h2>
     <p class="text_column">Please charatarize this event</p>
-	<p class="text_column"><button type="button" onclick="serveFun()" >Serve</button></p>
-	  <p class="text_column">If its a hit: <button type="button" onclick="serveFun()" >Agressive</button> or <button type="button" onclick="serveFun()" >Passive</button> and <button type="button" onclick="serveFun()" >Forehand</button> or <button type="button" onclick="serveFun()" >Backhand</button></p>
-	  <p class="text_column"><button type="button" onclick="hitFun()" >Win</button> or <button type="button" onclick="hitFun()" >Loss</button> </p>
+	<p class="text_column">If its a serve: <button type="button" onclick="forehand()" >Forehand</button> or <button type="button" onclick="backhand()" >Backhand</button></p>
+	  <p class="text_column">If its a hit: <button type="button" onclick="agressive()" >Agressive</button> or <button type="button" onclick="passive()" >Passive</button> and <button type="button" onclick="forehand()" >Forehand</button> or <button type="button" onclick="backhand()" >Backhand</button></p>
+	  <p class="text_column"><button type="button" onclick="win()" >Win</button> or <button type="button" onclick="loss()" >Loss</button> </p>
 	  <p class="text_column"></p>
   </section>
   <!-- Stats Gallery Section -->
