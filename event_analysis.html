@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Event Analysis</title>
+<link href="css/singlePageTemplate.css" rel="stylesheet" type="text/css">
+<!--The following script tag downloads a font from the Adobe Edge Web Fonts server for use within the web page. We recommend that you do not modify it.-->
+<script>var __adobewebfontsappname__="dreamweaver"</script>
+<script src="http://use.edgefonts.net/source-sans-pro:n2:default.js" type="text/javascript"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	
+	
+	
+<script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+	
+	function getQueryVariable(variable)
+	{
+       var url_string = window.location.href;
+		console.log(url_string);
+	   var url = new URL(url_string);
+       var c = url.searchParams.get(variable);
+		if (c == null) {
+			return(false);
+		} else {
+			return(c);
+		}
+       
+	}
+	
+	var start = getQueryVariable("start");
+	var stop = parseInt(getQueryVariable("stop")-start)*1000;
+	
+	console.log(start)
+		
+      var tag = document.createElement('script');
+	  var serve = [];
+	  var hit = [];
+	  var outcome = [];
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '390',
+          width: '640',
+          videoId: '-Dx8q0IO160',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+		
+      }
+	  
+	  
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+		if (start != false) {
+	  		event.target.seekTo(parseInt(start)); 
+			console.log("seeking")
+	  	} else {
+			event.target.playVideo();
+		}
+		  
+		
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done && stop != false) {
+          setTimeout(stopVideo, stop);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }
+	
+	function serveFun() {
+		serve.push(player.getCurrentTime())
+	}
+	
+	function hitFun() {
+		hit.push(player.getCurrentTime())
+	}
+	
+	function end() {
+		outcome.push(player.getCurrentTime())
+	}
+	function doneFun() {
+		document.getElementById("output").innerHTML="Serves: " + serve + "</br>Hits: " + hit + "</br> Outcomes: " + outcome; 
+	}
+	
+    </script>	
+	<script>
+		window.onload = function(){ 
+    		
+		};
+	</script>
+	
+	
+</head>
+<body>
+<!-- Main Container -->
+<div class="container"> 
+  <!-- Navigation -->
+  <header> <a href="">
+    <h4 class="logo">SCCS: Crowdsourcing Sport Video Analysis </h4>
+    </a>
+    <nav>
+      <ul>
+        <li><a href="#hero">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+      </ul>
+    </nav>
+  </header>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+<!--
+    <h2 class="hero_header">HERO <span class="light">LIGHT</span></h2>
+    <p class="tagline">Light is a simple one page website</p>
+-->
+	<div id="player"></div>
+  </section>
+  <!-- About Section -->
+  <section class="about" id="about">
+    <h2 class="hidden">About</h2>
+    <p class="text_column">Please charatarize this event</p>
+	<p class="text_column"><button type="button" onclick="serveFun()" >Serve</button></p>
+	  <p class="text_column">If its a hit: <button type="button" onclick="serveFun()" >Agressive</button> or <button type="button" onclick="serveFun()" >Passive</button> and <button type="button" onclick="serveFun()" >Forehand</button> or <button type="button" onclick="serveFun()" >Backhand</button></p>
+	  <p class="text_column"><button type="button" onclick="hitFun()" >Win</button> or <button type="button" onclick="hitFun()" >Loss</button> </p>
+	  <p class="text_column"></p>
+  </section>
+  <!-- Stats Gallery Section -->
+  <section class="about" id="about2">
+    <h2 class="hidden">About</h2>
+	  
+	  <p class="text_column">When you are done with the task please click done</p>
+	<p class="text_column"><button type="button" onclick="doneFun()" >Done!</button></p>
+	  
+	  
+  </section>
+	
+
+	<section class="about" id="about3">
+    <h2 class="hidden">About</h2>
+	<p class="text_column" id="output"></p>
+	
+	</section>
+	
+	<div class="gallery">
+    <div class="thumbnail">
+      <h1 class="stats">Serve vs Hit</h1>
+      <h4>SERVE is the first ball of a point being played</h4>
+      <p>All the balls the follow are considered a HIT</p>
+    </div>
+    <div class="thumbnail">
+      <h1 class="stats">Passive vs Aggressive</h1>
+      <h4>Agressive:&nbsp;Larger Swing, Faster Hit, Topspin ( usually )</h4>
+      <p>PASSIVE:&nbsp;Smaller Body Motion, Slower Ball, Backspin or No spin </p>
+    </div>
+    <div class="thumbnail">
+      <h1 class="stats">Forehand vs Backhand</h1>
+      <h4>TITLE</h4>
+      <p>One line description</p>
+    </div>
+    <div class="thumbnail">
+      <h1 class="stats">9870</h1>
+      <h4>TITLE</h4>
+      <p>One line description</p>
+    </div>
+  </div>
+	
+	
+  <!-- Parallax Section -->
+  <section class="banner">
+    <h2 class="parallax">Thanks for participating!!</h2>
+    <p class="parallax_description">It means the world to us</p>
+  </section>
+	
+  <!-- More Info Section -->
+<!--
+  <footer>
+    <article class="footer_column">
+      <h3>ABOUT</h3>
+      <img src="images/placeholder.jpg" alt="" width="400" height="200" class="cards"/>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla </p>
+    </article>
+    <article class="footer_column">
+      <h3>LOCATION</h3>
+      <img src="images/placeholder.jpg" alt="" width="400" height="200" class="cards"/>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla </p>
+    </article>
+  </footer>
+-->
+  <!-- Footer Section -->
+  <section class="footer_banner" id="contact">
+    <h2 class="hidden">Footer Banner Section </h2>
+    <p class="hero_header">FOR THE LATEST NEWS &amp; UPDATES</p>
+    <div class="button">subscribe</div>
+  </section>
+  <!-- Copyrights Section -->
+  <div class="copyright">&copy;2015 - <strong>We don't actually have a copyright</strong></div>
+</div>
+<!-- Main Container Ends -->
+</body>
+</html>
