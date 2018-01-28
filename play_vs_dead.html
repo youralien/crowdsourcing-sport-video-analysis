@@ -66,10 +66,14 @@
   function togglePlayDead() {
     if (playDeadButton == "play") {
       document.getElementById("playdeadbutton").innerHTML = "Click for end of play";
+      document.getElementById("playdeadbutton").style.color = "red";
       playDeadButton = "dead";
     } else {
       playDeadButton = "play";
       document.getElementById("playdeadbutton").innerHTML = "Click for start of play";
+      document.getElementById("playdeadbutton").style.color = "green";
+
+
     }
   }
 
